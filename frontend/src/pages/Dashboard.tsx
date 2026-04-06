@@ -251,6 +251,16 @@ function Dashboard() {
                         {link.shortCode}
                       </a>
                     </p>
+                    <p className="text-sm text-gray-500">
+                      Original: 
+                      <a
+                        href={link.originalURL}
+                        target="_blank"
+                        className="text-blue-500 ml-1"
+                      >
+                        {link.originalURL}
+                      </a>
+                    </p>
                     <p className="text-xs text-gray-400"> Clicks: {link.clickCount} </p>
                     <button
                       onClick={() => navigator.clipboard.writeText(`http://localhost:5000/${link.shortCode}`)}
