@@ -25,7 +25,8 @@ const LinkSchema = new Schema<ILink>({
     type: String,
     required: true,
     lowercase: true,
-    trim: true
+    trim: true,
+    unique: true
   },
   name: {
     type: String,
@@ -44,8 +45,6 @@ const LinkSchema = new Schema<ILink>({
     default: Date.now
   }
 });
-
-LinkSchema.index({ categoryId: 1, shortCode: 1 }, { unique: true });
 
 const Link = mongoose.model<ILink>("Link", LinkSchema);
 

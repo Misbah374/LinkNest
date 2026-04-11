@@ -12,6 +12,7 @@ function Dashboard() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [links, setLinks] = useState<any[]>([]);
   const [newLink, setNewLink] = useState("");
+  const [linkName, setLinkName] = useState("");
 
   const handleAddCategory = async () => {
     if (!newCategory.trim()) return;
@@ -70,13 +71,18 @@ function Dashboard() {
     try {
       const response = await api.post("/links", {
         categoryId: selectedCategory,
-        name: newLink,            // temporary
+        name: linkName,            // new field for link name
         originalURL: newLink,     // correct field
       });
+      if (!linkName.trim() || !newLink.trim()) {
+        alert("Name and URL required");
+        return;
+      }
 
       if (response.data.success) {
         setLinks([...links, response.data.data]);
         setNewLink("");
+        setLinkName("");
       } else {
         alert(response.data.message);
       }
@@ -252,13 +258,13 @@ function Dashboard() {
                       </a>
                     </p>
                     <p className="text-sm text-gray-500">
-                      Original: 
+                      Name:
                       <a
                         href={link.originalURL}
                         target="_blank"
                         className="text-blue-500 ml-1"
                       >
-                        {link.originalURL}
+                        {link.name || link.originalURL} {/* show name if exists, else URL */}
                       </a>
                     </p>
                     <p className="text-xs text-gray-400"> Clicks: {link.clickCount} </p>
@@ -289,6 +295,14 @@ function Dashboard() {
                 className="border p-2 rounded w-full mb-2"
                 value={newLink}
                 onChange={(e) => setNewLink(e.target.value)}
+              />
+
+              <input
+                type="text"
+                placeholder="Enter name (e.g., Google, Docs)"
+                className="border p-2 rounded w-full mb-2"
+                value={linkName}
+                onChange={(e) => setLinkName(e.target.value)}
               />
 
               <button

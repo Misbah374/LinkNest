@@ -7,6 +7,10 @@ interface AuthRequest extends Request {
   userId?: string;
 }
 
+const generateShortCode = () => {
+  return Math.random().toString(36).slice(2, 8);
+};
+
 export const createLink = async (req: AuthRequest, res: Response) => {
   try {
     const result = linkSchema.safeParse(req.body);
@@ -31,7 +35,18 @@ export const createLink = async (req: AuthRequest, res: Response) => {
       return res.status(404).json({ success: false, message: "Category not found" });
     }
 
-    const shortCode = Math.random().toString(36).slice(2, 8);
+    let shortCode;
+    let exists = true;
+
+    while (exists) {
+      shortCode = generateShortCode();
+
+      const existingLink = await Link.findOne({ shortCode });
+
+      if (!existingLink) {
+        exists = false;
+      }
+    }
 
     // save link
     const link = await Link.create({

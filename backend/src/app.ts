@@ -7,7 +7,9 @@ import { redirectLink } from "./controllers/linkController";
 
 const app = express()
 
-app.use(cors())
+app.use(cors({
+  origin: "*", // temporary, we will restrict later
+}));
 app.use(express.json())
 app.use("/links", linkRoutes);
 app.use("/auth", authRoutes)
