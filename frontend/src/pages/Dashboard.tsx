@@ -250,7 +250,7 @@ function Dashboard() {
                     <p className="text-sm text-gray-500">
                       Short: 
                       <a
-                        href={`http://localhost:5000/${link.shortCode}`}
+                        href={`${import.meta.env.VITE_BACKEND_URL}/${link.shortCode}`}
                         target="_blank"
                         className="text-blue-500 ml-1"
                       >
@@ -269,7 +269,7 @@ function Dashboard() {
                     </p>
                     <p className="text-xs text-gray-400"> Clicks: {link.clickCount} </p>
                     <button
-                      onClick={() => navigator.clipboard.writeText(`http://localhost:5000/${link.shortCode}`)}
+                      onClick={() => navigator.clipboard.writeText(`${import.meta.env.VITE_BACKEND_URL}/${link.shortCode}`)}
                       className="text-xs text-blue-500 ml-2"
                     >
                       Copy
