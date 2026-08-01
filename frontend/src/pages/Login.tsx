@@ -9,9 +9,13 @@ function Login() {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
+    if (!email.trim() || !password) {
+      alert("Email and password are required");
+      return;
+    }
     try{
-      const response = await api.post("/auth/login", {email, password,});
-      console.log(response.data);
+      const response = await api.post("/auth/login", {email: email.trim().toLowerCase(), password,});
+      // console.log(response.data);
       if(response.data.token){
         const token = response.data.token;
         localStorage.setItem("token", token);       // store token
@@ -21,8 +25,8 @@ function Login() {
         alert(response.data.message);
       }
     }catch(error: any){
-      console.log(error);
-      console.log(error.response);
+      // console.log(error);
+      // console.log(error.response);
       alert(error.response?.data?.message || "Login failed"); 
     }
   };

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://linknest-production-d939.up.railway.app',
+  baseURL: import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000',
 });
 
 api.interceptors.request.use((config) => {

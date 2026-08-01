@@ -12,8 +12,19 @@ function Register() {
   const navigate = useNavigate();
   
   const handleRegister = async () => {
-    if (!name || !email || !password || !confirmPassword) {
+    if (!name.trim() || !email.trim() || !password || !confirmPassword) {
       alert("All fields are required");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      alert("Invalid email address");
+      return;
+    }
+
+    if(password.length < 8){
+      alert("Password must be at least 8 characters.");
       return;
     }
 
@@ -25,22 +36,22 @@ function Register() {
     // API call will come next
 
     try{
-      const response = await api.post("/auth/register", {username: name,
-  email,
+      const response = await api.post("/auth/register", {username: name.trim(),
+  email : email.trim().toLowerCase(),
   password,});
       if(response.data.success){
         alert("Registration successful! Please login.");
         navigate("/login");
       }else{
         alert(response.data.message);
-        console.log({
+        /*console.log({
   name,
   email,
   password,
-});
+});*/ 
       }
     }catch(error: any){
-      console.log(error);
+      // console.log(error);
       alert(error.response?.data?.message || "Registration failed");
     }
   };

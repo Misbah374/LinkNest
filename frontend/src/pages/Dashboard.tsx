@@ -252,6 +252,7 @@ function Dashboard() {
                       <a
                         href={`${import.meta.env.VITE_BACKEND_URL}/${link.shortCode}`}
                         target="_blank"
+                        rel="noopener noreferrer"
                         className="text-blue-500 ml-1"
                       >
                         {link.shortCode}
@@ -262,6 +263,7 @@ function Dashboard() {
                       <a
                         href={link.originalURL}
                         target="_blank"
+                        rel="noopener noreferrer"
                         className="text-blue-500 ml-1"
                       >
                         {link.name || link.originalURL} {/* show name if exists, else URL */}
